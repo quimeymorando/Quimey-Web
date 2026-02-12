@@ -54,7 +54,7 @@ export default function FloatingNav() {
                             QUIMEY MORANDO
                         </span>
                     ) : (
-                        <div className="flex items-center gap-10">
+                        <div className="flex items-center gap-8">
                             {links.map((link) => (
                                 <Link
                                     key={link.name}
@@ -64,6 +64,15 @@ export default function FloatingNav() {
                                     {link.name}
                                 </Link>
                             ))}
+                            <Link
+                                href="/agencia"
+                                className="relative px-5 py-2 text-sm font-bold uppercase tracking-widest text-white transition-all duration-300 rounded-lg group overflow-hidden"
+                            >
+                                <div className="absolute inset-0 border border-brand-cyan/30 rounded-lg group-hover:border-brand-cyan/80 transition-colors duration-300" />
+                                <span className="relative z-10 text-white font-bold tracking-widest uppercase text-sm">
+                                    AGENCIA
+                                </span>
+                            </Link>
                         </div>
                     )}
                 </div>

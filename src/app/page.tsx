@@ -9,6 +9,7 @@ import AutonomyThreshold from "@/components/sections/AutonomyThreshold";
 const VisionaryProfile = dynamic(() => import("@/components/sections/VisionaryProfile"));
 const AutonomyBridge = dynamic(() => import("@/components/sections/AutonomyBridge"));
 const EcosystemInstallation = dynamic(() => import("@/components/sections/EcosystemInstallation"));
+const AgencyTeaser = dynamic(() => import("@/components/sections/AgencyTeaser"));
 const ParadigmShifter = dynamic(() => import("@/components/sections/ParadigmShifter"));
 
 export default function Home() {
@@ -33,6 +34,9 @@ export default function Home() {
 
       {/* Ecosystem Installation (Offer) */}
       <EcosystemInstallation />
+
+      {/* Agency Teaser */}
+      <AgencyTeaser />
 
       {/* Paradigm Shifter (FAQ) */}
       <ParadigmShifter />
