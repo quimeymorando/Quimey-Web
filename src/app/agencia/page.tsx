@@ -2,221 +2,332 @@
 
 import { motion } from "framer-motion";
 import FloatingNav from "@/components/ui/magic/FloatingNav";
-import { Monitor, Users, Video, Zap, Check, Lock, ArrowRight } from "lucide-react";
+import { Monitor, Users, Video, Zap, Check, Lock, ArrowRight, MessageSquare, Globe, Sparkles } from "lucide-react";
+import AgencyCard from "@/components/ui/AgencyCard";
 
 export default function AgencyPage() {
     return (
-        <main className="flex min-h-screen flex-col items-center relative overflow-hidden bg-background font-display selection:bg-brand-cyan selection:text-background text-white">
+        <main className="flex min-h-screen flex-col items-center relative overflow-hidden bg-[#0A0F1E] font-display selection:bg-brand-cyan/20 selection:text-brand-cyan text-white">
             <FloatingNav />
 
             {/* Background Ambience */}
-            <div className="absolute inset-0 bg-background z-0" />
-            <div className="absolute top-0 left-0 w-full h-[800px] bg-brand-cyan/5 blur-[150px] animate-pulse z-0" />
+            <div className="absolute inset-0 bg-[#0A0F1E] z-0" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-brand-cyan/5 blur-[150px] animate-pulse z-0 rounded-full" />
+            <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-brand-purple/5 blur-[120px] z-0 rounded-full" />
 
-            {/* HERO SECTION */}
-            <section className="relative w-full pt-40 pb-20 px-6 z-10">
-                <div className="max-w-5xl mx-auto text-center">
+            {/* SECTION 0: THE MANIFESTO (HERO) */}
+            <section className="relative w-full pt-48 pb-32 px-6 z-10 text-center">
+                <div className="max-w-4xl mx-auto">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        <h2 className="text-brand-cyan font-bold tracking-[0.2em] uppercase text-sm mb-6">
-                            <span className="italic relative z-10 text-xl font-light text-white/80">Nuestros Servicios</span> <br /> AGENCIA TIERRA DORADA
+                        <h2 className="text-brand-cyan font-bold tracking-[0.3em] uppercase text-sm mb-8 inline-block px-4 py-2 rounded-full border border-brand-cyan/10 bg-brand-cyan/5">
+                            La Agencia
                         </h2>
                         <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-8">
-                            Tu Infraestructura de Crecimiento, <br />
+                            Que el crecimiento de tu visión <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-purple">
-                                Diseñada para la Libertad.
+                                no te cueste tu libertad.
                             </span>
                         </h1>
-                        <p className="text-xl text-white/60 max-w-3xl mx-auto leading-relaxed">
-                            Construimos los sistemas que te permiten escalar sin sacrificar tu vida.
+                        <p className="text-xl md:text-2xl text-white/60 max-w-3xl mx-auto leading-relaxed font-light">
+                            Tu infraestructura de crecimiento
                         </p>
                     </motion.div>
                 </div>
             </section>
 
-            {/* OPPORTUNITY SWITCH */}
-            <section className="relative w-full py-20 px-6 z-10 glass-card border-y border-white/5 bg-white/[0.02]">
-                <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-                    <div>
-                        <h3 className="text-3xl font-bold mb-6 text-white uppercase tracking-tight">
-                            El <span className="text-brand-purple">Cambio de Paradigma</span>
-                        </h3>
-                        <div className="space-y-6">
-                            <div className="p-6 rounded-2xl bg-red-500/5 border border-red-500/10">
-                                <h4 className="text-red-400 font-bold mb-2 uppercase text-sm">El Viejo Modelo (Gasto)</h4>
-                                <p className="text-white/60 text-sm">
-                                    Contratar agencias fragmentadas. Unos hacen la web, otros los ads, otros el mail. Nadie se habla. Tú eres el gerente de proyecto estresado.
-                                </p>
-                            </div>
-                            <div className="p-6 rounded-2xl bg-brand-cyan/5 border border-brand-cyan/20 relative group overflow-hidden">
-                                <div className="absolute inset-0 bg-brand-cyan/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                <h4 className="text-brand-cyan font-bold mb-2 uppercase text-sm">El Modelo Tierra Dorada (Inversión)</h4>
-                                <p className="text-white/80 text-sm">
-                                    Construimos <strong>Activos Digitales Propios</strong>. Un ecosistema unificado donde cada pieza (Web, Tráfico, Ventas) alimenta a la siguiente. Tú lideras la visión, nosotros ejecutamos la ingeniería.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-brand-cyan to-brand-purple blur-[100px] opacity-20" />
-                        <div className="relative glass-card p-10 rounded-3xl border border-white/10 flex flex-col items-center text-center">
-                            <Zap className="w-16 h-16 text-brand-cyan mb-6" />
-                            <p className="text-2xl font-bold text-white italic">
-                                "No compres servicios. Invierte en una máquina que funcione sin ti."
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* THE STACK: WEB SYSTEMS */}
+            {/* SECTION 1: WEB ARCHITECTURE */}
             <section className="relative w-full py-32 px-6 z-10">
                 <div className="max-w-7xl mx-auto">
-                    <div className="flex items-center gap-4 mb-16">
-                        <Monitor className="w-10 h-10 text-brand-cyan" />
-                        <h3 className="text-4xl font-bold uppercase tracking-tight">Sistemas <span className="text-brand-cyan">Web</span></h3>
-                    </div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        className="flex items-center gap-4 mb-20"
+                    >
+                        <div className="p-3 rounded-xl bg-brand-cyan/10 border border-brand-cyan/20">
+                            <Monitor className="w-8 h-8 text-brand-cyan" />
+                        </div>
+                        <div>
+                            <h3 className="text-3xl font-bold uppercase tracking-tight">Arquitectura <span className="text-brand-cyan">Web</span></h3>
+                            <p className="text-white/40 text-sm tracking-wide uppercase mt-1">Niveles de Presencia</p>
+                        </div>
+                    </motion.div>
 
                     <div className="grid md:grid-cols-3 gap-8">
                         {[
                             {
-                                title: "Landing de Captación",
-                                desc: "Diseñada para una sola cosa: convertir tráfico frío en leads cualificados. Sin distracciones. Sin menú.",
-                                features: ["Copywriting Persuasivo", "Diseño Minimalista", "Carga en <1s"],
-                                color: "border-white/10"
+                                subtitle: "Nivel 1",
+                                title: "Landing Page",
+                                desc: "Captación rápida y conversión directa. Diseñada para transformar tráfico frío en leads cualificados sin fricción.",
+                                features: ["Diseño Minimalista", "Copywriting Persuasivo", "Velocidad Extrema"],
+                                gradient: "from-brand-cyan/20 to-transparent",
+                                border: "border-brand-cyan/30",
+                                spotlightColor: "rgba(6, 182, 212, 0.15)" // cyan
                             },
                             {
-                                title: "Web de Autoridad",
-                                desc: "Tu cuartel general digital. Posicionamiento, filosofía y validación social para elevar tu estatus.",
-                                features: ["Blog / Newsletter", "Casos de Éxito", "Storytelling Visual"],
-                                color: "border-brand-cyan/30 bg-brand-cyan/5"
+                                subtitle: "Nivel 2",
+                                title: "Web Intermedia",
+                                desc: "Construcción de autoridad. Un espacio dinámico donde tu contenido fluye y tu marca se posiciona en el mercado.",
+                                features: ["Blog / Contenido", "Casos de Éxito", "Estructura SEO"],
+                                gradient: "from-brand-purple/20 to-transparent",
+                                border: "border-brand-purple/30",
+                                spotlightColor: "rgba(168, 85, 247, 0.15)" // purple
                             },
                             {
+                                subtitle: "Nivel 3",
                                 title: "Ecosistema PRO",
-                                desc: "La integración total. Web + Academias + Funnels + Automatizaciones. Todo conectado.",
-                                features: ["Área de Miembros", "Funnels Complejos", "Integración CRM"],
-                                color: "border-brand-purple/30 bg-brand-purple/5"
+                                desc: "La integración total. Web, Academias, Funnels y Automatizaciones operando al unísono. Tu imperio digital.",
+                                features: ["Área de Miembros", "Funnels Complejos", "Integración CRM Total"],
+                                gradient: "from-white/10 to-transparent",
+                                border: "border-white/20",
+                                spotlightColor: "rgba(255, 255, 255, 0.1)" // white
                             }
                         ].map((item, i) => (
-                            <div key={i} className={`p-8 rounded-3xl border ${item.color} backdrop-blur-sm relative hover:translate-y-[-5px] transition-transform duration-300`}>
-                                <h4 className="text-xl font-bold mb-4">{item.title}</h4>
-                                <p className="text-white/60 text-sm mb-6 leading-relaxed">{item.desc}</p>
-                                <ul className="space-y-3">
-                                    {item.features.map((f, j) => (
-                                        <li key={j} className="flex items-center gap-2 text-sm text-white/80">
-                                            <Check className="w-4 h-4 text-brand-cyan" /> {f}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                            <AgencyCard key={i} item={item} index={i} />
                         ))}
                     </div>
                 </div>
+
             </section>
 
-            {/* THE STACK: SETTER & CLOSER */}
-            <section className="relative w-full py-32 px-6 z-10 bg-white/[0.02] border-y border-white/5">
-                <div className="max-w-7xl mx-auto">
-                    <div className="flex items-center gap-4 mb-16">
-                        <Users className="w-10 h-10 text-brand-purple" />
-                        <h3 className="text-4xl font-bold uppercase tracking-tight">Setter & <span className="text-brand-purple">Closer</span></h3>
-                    </div>
+            {/* SECTION 2: CONVERSATION INTELLIGENCE */}
+            <section className="relative w-full py-32 px-6 z-10 bg-gradient-to-b from-transparent to-[#0A0F1E]">
+                <div className="absolute inset-0 bg-brand-purple/5 skew-y-3 z-0 pointer-events-none" />
+                <div className="max-w-7xl mx-auto relative z-10">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8"
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="p-3 rounded-xl bg-brand-purple/10 border border-brand-purple/20">
+                                <MessageSquare className="w-8 h-8 text-brand-purple" />
+                            </div>
+                            <div>
+                                <h3 className="text-3xl font-bold uppercase tracking-tight">Inteligencia en <span className="text-brand-purple">Conversación</span></h3>
+                                <p className="text-white/40 text-sm tracking-wide uppercase mt-1">ManyChat & IA</p>
+                            </div>
+                        </div>
+                        <p className="text-white/50 text-right md:max-w-md font-light">
+                            El alivio de dejar de responder lo mismo una y otra vez.
+                        </p>
+                    </motion.div>
 
                     <div className="grid md:grid-cols-2 gap-12">
-                        <div className="glass-card p-10 rounded-3xl border border-white/5">
-                            <h4 className="text-2xl font-bold mb-6 text-brand-cyan">Appointment Setting Híbrido</h4>
-                            <p className="text-white/60 leading-relaxed mb-8">
-                                La combinación letal. Usamos <strong>Inteligencia Artificial</strong> para la respuesta inmediata y filtrado inicial, y <strong>Setters Humanos</strong> entrenados para generar relaciones y agendar llamadas calificadas.
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="p-10 rounded-[2rem] border border-white/10 bg-[#0F1629]/80 backdrop-blur-sm"
+                        >
+                            <h4 className="text-2xl font-bold mb-4 text-white">Automatización Básica</h4>
+                            <p className="text-white/60 leading-relaxed mb-6 font-light">
+                                Organización de flujos de respuesta para que nada se pierda. Mensajes de bienvenida, entrega de recursos y FAQs automatizadas.
                             </p>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                                    <span className="block text-brand-cyan font-bold mb-1">Bot</span>
-                                    <span className="text-xs text-white/50">Velocidad & Disponibilidad 24/7</span>
-                                </div>
-                                <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                                    <span className="block text-brand-cyan font-bold mb-1">Humano</span>
-                                    <span className="text-xs text-white/50">Empatía & Contexto</span>
-                                </div>
+                            <div className="h-1 w-full bg-gradient-to-r from-white/20 to-transparent rounded-full" />
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="p-10 rounded-[2rem] border border-brand-purple/40 bg-brand-purple/5 backdrop-blur-sm relative overflow-hidden"
+                        >
+                            <div className="absolute top-0 right-0 p-4 opacity-20"><Sparkles className="w-20 h-20 text-brand-purple" /></div>
+                            <h4 className="text-2xl font-bold mb-4 text-brand-purple">Automatización Agéntica (IA)</h4>
+                            <p className="text-white/80 leading-relaxed mb-6 font-light">
+                                IA que comprende, razona y guía a tu comunidad con <strong className="text-white font-medium">tu propia voz y tono</strong>. Sin intervención manual, 24/7.
+                            </p>
+                            <div className="h-1 w-full bg-gradient-to-r from-brand-purple to-transparent rounded-full" />
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            {/* SECTION 3: CONNECTION & CLOSING */}
+            <section className="relative w-full py-32 px-6 z-10">
+                <div className="max-w-7xl mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="flex items-center gap-4 mb-20"
+                    >
+                        <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+                            <Users className="w-8 h-8 text-white" />
+                        </div>
+                        <div>
+                            <h3 className="text-3xl font-bold uppercase tracking-tight">Conexión y <span className="text-white/70">Cierre</span></h3>
+                            <p className="text-white/40 text-sm tracking-wide uppercase mt-1">Setters & Closers</p>
+                        </div>
+                    </motion.div>
+
+                    <div className="grid md:grid-cols-2 gap-8">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="p-12 rounded-[2.5rem] border border-brand-cyan/20 bg-gradient-to-br from-brand-cyan/5 to-transparent relative group"
+                        >
+                            <h4 className="text-3xl font-bold mb-6 text-brand-cyan">Setter Híbrido</h4>
+                            <p className="text-white/70 mb-8 font-light leading-relaxed">
+                                Ingeniería de agendamiento para calificar leads y conectar solo con los que realmente están listos.
+                                <br /><br />
+                                <span className="text-white border-l-2 border-brand-cyan pl-4 block">Persona o Bot, según la etapa de tu negocio.</span>
+                            </p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="p-12 rounded-[2.5rem] border border-brand-purple/20 bg-gradient-to-br from-brand-purple/5 to-transparent relative group overflow-hidden"
+                        >
+                            <div className="absolute top-6 right-6 flex items-center gap-2 px-3 py-1 rounded-full border border-brand-purple/30 bg-brand-purple/10">
+                                <Lock className="w-3 h-3 text-brand-purple" />
+                                <span className="text-[10px] uppercase font-bold text-brand-purple tracking-wider">Exclusivo +10k/mes</span>
+                            </div>
+
+                            <h4 className="text-3xl font-bold mb-6 text-brand-purple">Closer de Élite</h4>
+                            <p className="text-white/70 mb-8 font-light leading-relaxed">
+                                El toque final para ventas de alto valor. Profesionales entrenados para cerrar, no para vender.
+                            </p>
+
+                            <p className="text-xs text-brand-purple/60 uppercase tracking-widest mt-auto">
+                                * Servicio bajo estricta calificación
+                            </p>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            {/* SECTION 4: VISUAL NARRATIVE */}
+            <section className="relative w-full py-32 px-6 z-10 bg-[#0F1629]/30">
+                <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                    >
+                        <div className="flex items-center gap-4 mb-10">
+                            <div className="p-3 rounded-xl bg-brand-cyan/10 border border-brand-cyan/20">
+                                <Video className="w-8 h-8 text-brand-cyan" />
+                            </div>
+                            <div>
+                                <h3 className="text-3xl font-bold uppercase tracking-tight">Narrativa <span className="text-brand-cyan">Visual</span></h3>
+                                <p className="text-white/40 text-sm tracking-wide uppercase mt-1">Producción de Alto Impacto</p>
                             </div>
                         </div>
 
-                        <div className="glass-card p-10 rounded-3xl border border-brand-purple/20 relative overflow-hidden group">
-                            <div className="absolute top-4 right-4 text-xs font-bold uppercase tracking-widest text-brand-purple border border-brand-purple/30 px-3 py-1 rounded-full flex items-center gap-2">
-                                <Lock className="w-3 h-3" /> Exclusivo
+                        <div className="space-y-10">
+                            <div>
+                                <h4 className="text-xl font-bold text-white mb-2">Estrategia & Guionado</h4>
+                                <p className="text-white/60 font-light leading-relaxed">
+                                    No grabamos videos, diseñamos mensajes. Estructuras psicológicas que conectan con la esencia profunda de tu cliente ideal.
+                                </p>
                             </div>
-                            <h4 className="text-2xl font-bold mb-6 text-brand-purple">Cierre de Ventas (Closer)</h4>
-                            <p className="text-white/60 leading-relaxed mb-8">
-                                Implementamos cerradores de élite en tu equipo. Profesionales formados en venta consultiva y <em>Takeaway Selling</em>. No persiguen, evalúan si el prospecto califica para trabajar contigo.
-                            </p>
-
-                            <div className="mt-8 p-4 bg-brand-purple/10 border border-brand-purple/30 rounded-xl">
-                                <p className="text-sm text-brand-purple font-medium text-center">
-                                    ⚠️ SERVICIO HABILITADO ÚNICAMENTE PARA CUENTAS CON FACTURACIÓN SUPERIOR A 10K/MES
+                            <div>
+                                <h4 className="text-xl font-bold text-white mb-2">Edición Pack Futurista</h4>
+                                <p className="text-white/60 font-light leading-relaxed">
+                                    Post-producción cinematográfica alineada a tu identidad visual. Retención, dinamismo y estética impecable.
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        className="relative aspect-video rounded-3xl bg-brand-cyan/5 border border-brand-cyan/20 flex items-center justify-center overflow-hidden group"
+                    >
+                        <div className="absolute inset-0 bg-gradient-to-tr from-brand-cyan/20 to-brand-purple/20 opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+                        <span className="relative z-10 text-white/20 font-display font-bold text-5xl uppercase tracking-widest">Storytelling</span>
+                    </motion.div>
                 </div>
             </section>
 
-            {/* THE STACK: VIDEO & ADS */}
+            {/* SECTION 5: SOUL & REACH */}
             <section className="relative w-full py-32 px-6 z-10">
-                <div className="max-w-7xl mx-auto">
-                    <div className="flex items-center gap-4 mb-16">
-                        <Video className="w-10 h-10 text-brand-cyan" />
-                        <h3 className="text-4xl font-bold uppercase tracking-tight">Contenido & <span className="text-brand-cyan">Tráfico</span></h3>
-                    </div>
+                <div className="max-w-7xl mx-auto text-center mb-20">
+                    <motion.h3
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-4xl font-bold uppercase tracking-tight mb-4"
+                    >
+                        Alma y <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-brand-cyan">Alcance</span>
+                    </motion.h3>
+                    <p className="text-white/40 uppercase tracking-widest text-sm">Marketing & Marca</p>
+                </div>
 
-                    <div className="relative glass-card p-12 rounded-3xl border border-white/10 text-center overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-b from-brand-cyan/5 to-transparent pointer-events-none" />
+                <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
+                    <motion.div
+                        whileHover={{ y: -5 }}
+                        className="p-8 rounded-3xl bg-[#0F1629]/50 border border-white/5 hover:border-brand-purple/30 transition-all duration-300"
+                    >
+                        <Sparkles className="w-8 h-8 text-brand-purple mb-6" />
+                        <h4 className="text-xl font-bold mb-4">Branding Ciber-Espiritual</h4>
+                        <p className="text-white/60 text-sm font-light leading-relaxed">Identidad visual que une tecnología y propósito. Tu marca como un símbolo.</p>
+                    </motion.div>
 
-                        <h4 className="text-3xl font-bold mb-6 relative z-10">Combustible para tu Motor de Ingresos</h4>
-                        <p className="text-xl text-white/60 max-w-3xl mx-auto mb-10 relative z-10 leading-relaxed">
-                            No hacemos "videos bonitos". Diseñamos piezas de contenido estratégicas y campañas de publicidad (Ads) con un único objetivo: <strong>Alimentar al sistema con tráfico cualificado al menor coste posible.</strong>
-                        </p>
+                    <motion.div
+                        whileHover={{ y: -5 }}
+                        className="p-8 rounded-3xl bg-[#0F1629]/50 border border-white/5 hover:border-brand-cyan/30 transition-all duration-300"
+                    >
+                        <Globe className="w-8 h-8 text-brand-cyan mb-6" />
+                        <h4 className="text-xl font-bold mb-4">Meta Ads (Básico & PRO)</h4>
+                        <p className="text-white/60 text-sm font-light leading-relaxed">Pauta inteligente diseñada para atraer, no para perseguir. El combustible de tu sistema.</p>
+                    </motion.div>
 
-                        <div className="flex flex-wrap justify-center gap-4 relative z-10">
-                            {[
-                                "Guiones Psicológicos", "Edición Dinámica", "Estrategia de Ads", "Retargeting Omnicanal"
-                            ].map((tag, i) => (
-                                <span key={i} className="px-6 py-2 rounded-full border border-white/10 text-sm font-medium hover:border-brand-cyan/50 hover:text-brand-cyan transition-colors cursor-default">
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
+                    <motion.div
+                        whileHover={{ y: -5 }}
+                        className="p-8 rounded-3xl bg-[#0F1629]/50 border border-white/5 hover:border-white/20 transition-all duration-300"
+                    >
+                        <Users className="w-8 h-8 text-white mb-6" />
+                        <h4 className="text-xl font-bold mb-4">Community Manager</h4>
+                        <p className="text-white/60 text-sm font-light leading-relaxed">Gestión y protección de tu tribu digital. Nutrición constante de tu audiencia.</p>
+                    </motion.div>
                 </div>
             </section>
 
-            {/* CTA SECTION */}
-            <section className="relative w-full py-32 px-6 z-10 text-center">
-                <div className="max-w-3xl mx-auto">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-8 uppercase tracking-tighter">
-                        ¿Listo para Instalar tu <span className="text-brand-cyan">Infraestructura?</span>
+            {/* CTA SECTION: THE STACK */}
+            <section className="relative w-full py-40 px-6 z-10 text-center bg-gradient-to-t from-brand-cyan/5 to-transparent">
+                <div className="absolute inset-0 bg-[#0A0F1E] z-[-1]" />
+                <div className="max-w-4xl mx-auto">
+                    <h2 className="text-4xl md:text-6xl font-bold mb-10 uppercase tracking-tighter">
+                        ¿Listo para diseñar tu <br /> <span className="text-brand-cyan">Infraestructura?</span>
                     </h2>
-                    <p className="text-xl text-white/60 mb-12">
-                        Agenda una sesión de diagnóstico para evaluar si tu negocio está listo para este nivel de implementación.
-                    </p>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16 opacity-60 text-sm uppercase tracking-widest font-light">
+                        <span>Web Architecture</span>
+                        <span>Agentic AI</span>
+                        <span>Elite Closers</span>
+                        <span>Visual Narrative</span>
+                    </div>
 
                     <a
                         href="https://wa.me/5492804819907"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex group relative px-12 py-5 bg-transparent overflow-hidden rounded-full transition-all duration-300"
+                        className="inline-flex group relative px-12 py-6 bg-transparent overflow-hidden rounded-full transition-all duration-300 hover:scale-105"
                     >
-                        <div className="absolute inset-0 bg-brand-cyan/10 opacity-100 group-hover:opacity-80 transition-opacity duration-300 blur-sm" />
-                        <div className="absolute inset-0 border border-brand-cyan rounded-full group-hover:scale-105 transition-transform duration-300" />
-                        <span className="relative z-10 flex items-center gap-4 text-white font-bold tracking-widest uppercase text-base">
-                            APLICAR PARA CONSULTA DE INFRAESTRUCTURA
+                        <div className="absolute inset-0 bg-gradient-to-r from-brand-cyan to-brand-purple blur-md opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-black/20" /> {/* Darken text contrast */}
+                        <span className="relative z-10 flex items-center gap-4 text-white font-bold tracking-widest uppercase text-base shadow-lg">
+                            APLICAR AHORA
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </span>
                     </a>
                 </div>
             </section>
 
-        </main>
+        </main >
     );
 }
