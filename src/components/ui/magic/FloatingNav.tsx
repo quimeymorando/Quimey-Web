@@ -11,11 +11,7 @@ export default function FloatingNav() {
     const pathname = usePathname();
     const isHome = pathname === "/";
 
-    const links = [
-        { name: "Filosofía", href: isHome ? "#" : "/#" },
-        { name: "Sistemas", href: isHome ? "#" : "/#" },
-        { name: "Roadmap", href: "/roadmap" },
-    ];
+
 
     return (
         <motion.nav
@@ -24,7 +20,7 @@ export default function FloatingNav() {
             transition={{ duration: 0.8 }}
             className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4"
         >
-            <div className="glass-nav flex items-center justify-between rounded-xl px-4 py-3 md:px-8 md:py-4 w-full max-w-[1100px] transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.15)]">
+            <div className="glass-nav flex items-center justify-between rounded-xl px-4 py-3 md:px-8 md:py-4 w-full max-w-[1200px] transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.15)]">
                 {/* Left Section */}
                 <div className="flex items-center gap-4">
                     {!isHome ? (
@@ -38,7 +34,7 @@ export default function FloatingNav() {
                     ) : (
                         <Link href="/" className="flex items-center gap-3 group">
                             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20 group-hover:bg-brand-cyan/20 transition-colors">
-                                <span className="font-display font-bold text-xl">QM</span>
+                                <div className="w-9 h-9 bg-brand-cyan" style={{ maskImage: "url('/logoquimi%20copy.svg')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/logoquimi%20copy.svg')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
                             </div>
                             <span className="hidden md:inline text-xl font-bold tracking-tighter text-white font-display group-hover:text-brand-cyan transition-colors">
                                 QUIMEY MORANDO
@@ -48,32 +44,46 @@ export default function FloatingNav() {
                 </div>
 
                 {/* Center Section */}
-                <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center">
+                <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-10">
                     {!isHome ? (
                         <span className="text-xl font-bold tracking-tighter text-white font-display uppercase">
                             QUIMEY MORANDO
                         </span>
                     ) : (
-                        <div className="flex items-center gap-8">
-                            {links.map((link) => (
+                        <>
+                            {/* CURSOS & PRODUCTOS (Violet Glow) */}
+                            {[
+                                { name: "Cursos", href: "/cursos" },
+                                { name: "Productos", href: "/productos" }
+                            ].map((item) => (
                                 <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    className="text-sm font-medium text-foreground/60 transition-colors hover:text-brand-cyan uppercase tracking-widest"
+                                    key={item.name}
+                                    href={item.href}
+                                    className="relative px-5 py-2 text-sm font-bold uppercase tracking-widest text-white transition-all duration-300 rounded-lg group overflow-hidden"
                                 >
-                                    {link.name}
+                                    <div className="absolute inset-0 border border-brand-purple/30 rounded-lg group-hover:border-brand-purple group-hover:shadow-[0_0_15px_rgba(120,0,255,0.5)] transition-all duration-300" />
+                                    <span className="relative z-10">{item.name}</span>
                                 </Link>
                             ))}
+
+                            {/* AGENCIA (Cyan - Existing) */}
                             <Link
                                 href="/agencia"
                                 className="relative px-5 py-2 text-sm font-bold uppercase tracking-widest text-white transition-all duration-300 rounded-lg group overflow-hidden"
                             >
-                                <div className="absolute inset-0 border border-brand-cyan/30 rounded-lg group-hover:border-brand-cyan/80 transition-colors duration-300" />
-                                <span className="relative z-10 text-white font-bold tracking-widest uppercase text-sm">
-                                    AGENCIA
-                                </span>
+                                <div className="absolute inset-0 border border-brand-cyan/30 rounded-lg group-hover:border-brand-cyan group-hover:shadow-[0_0_15px_rgba(6,182,212,0.5)] transition-all duration-300" />
+                                <span className="relative z-10">AGENCIA</span>
                             </Link>
-                        </div>
+
+                            {/* ROADMAP (White - Simple/Fixed) */}
+                            <Link
+                                href="/roadmap"
+                                className="relative px-5 py-2 text-sm font-bold uppercase tracking-widest text-white/80 transition-all duration-300 rounded-lg group hover:text-white"
+                            >
+                                <div className="absolute inset-0 border border-white/20 rounded-lg transition-colors duration-300 group-hover:border-white/40" />
+                                <span className="relative z-10">ROADMAP</span>
+                            </Link>
+                        </>
                     )}
                 </div>
 

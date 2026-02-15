@@ -1,15 +1,18 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
-import { motion, useScroll, useTransform, useAnimation } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import React from "react";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import CircuitBackground from "@/components/ui/CircuitBackground";
 
 const QuantumCTA = () => {
     return (
         <section className="relative w-full min-h-screen py-32 px-6 z-10 bg-[#050A14] overflow-hidden flex flex-col items-center justify-center">
 
-            {/* 1. ATMOSPHERE: WARP SPEED BACKGROUND */}
-            <WarpSpeedBackground />
+            {/* 1. ATMOSPHERE: CIRCUIT BACKGROUND (REPLACED WARP SPEED) */}
+            <div className="absolute inset-0 z-0">
+                <CircuitBackground />
+            </div>
 
             {/* Digital Fog */}
             <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#050A14] via-[#050A14]/80 to-transparent z-0 pointer-events-none" />
@@ -120,102 +123,6 @@ const QuantumCTA = () => {
             </div>
         </section>
     );
-};
-
-const WarpSpeedBackground = () => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
-
-        let width = window.innerWidth;
-        let height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-
-        const centerX = width / 2;
-        const centerY = height / 2;
-
-        const lines: { angle: number; speed: number; length: number; color: string }[] = [];
-        const numLines = 100;
-
-        for (let i = 0; i < numLines; i++) {
-            lines.push({
-                angle: Math.random() * Math.PI * 2,
-                speed: Math.random() * 5 + 2,
-                length: Math.random() * 100, // Distance from center
-                color: Math.random() > 0.5 ? "#00FFFF" : "#7800FF"
-            });
-        }
-
-        const animate = () => {
-            ctx.fillStyle = "#050A14";
-            ctx.fillRect(0, 0, width, height);
-
-            // Draw center glow
-            const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 300);
-            gradient.addColorStop(0, "rgba(6, 182, 212, 0.1)");
-            gradient.addColorStop(1, "transparent");
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, width, height);
-
-
-            lines.forEach((line) => {
-                line.length += line.speed * (line.length * 0.01 + 0.5); // Accelerate as it moves out
-
-                // Reset if out of bounds
-                if (line.length > Math.max(width, height)) {
-                    line.length = Math.random() * 50;
-                    line.angle = Math.random() * Math.PI * 2;
-                }
-
-                // Warp effect: Lines emerging from center
-                // Calculate start and end points of the line segment
-                const x1 = centerX + Math.cos(line.angle) * line.length;
-                const y1 = centerY + Math.sin(line.angle) * line.length;
-
-                // Trail length increases with speed/distance
-                const trailLength = line.length * 0.3;
-                const x2 = centerX + Math.cos(line.angle) * (line.length - trailLength);
-                const y2 = centerY + Math.sin(line.angle) * (line.length - trailLength);
-
-                // Only draw if outside a small center radius to simulate depth
-                if (line.length > 50) {
-                    ctx.beginPath();
-                    ctx.moveTo(x2, y2);
-                    ctx.lineTo(x1, y1);
-                    ctx.strokeStyle = line.color;
-                    ctx.lineWidth = Math.min(3, (line.length / 500) * 2); // Thicker as it approaches screen
-                    ctx.globalAlpha = Math.min(1, (line.length / 500)); // Fade in
-                    ctx.stroke();
-                    ctx.globalAlpha = 1;
-                }
-            });
-
-            requestAnimationFrame(animate);
-        };
-
-        const animationId = requestAnimationFrame(animate);
-
-        const handleResize = () => {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-        };
-
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            cancelAnimationFrame(animationId);
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
-
-    return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-40 mix-blend-screen pointer-events-none" />;
 };
 
 export default QuantumCTA;

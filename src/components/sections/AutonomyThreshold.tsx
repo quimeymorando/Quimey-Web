@@ -98,9 +98,13 @@ export default function AutonomyThreshold() {
                     </div>
 
                     {/* Signature */}
-                    <div className="mt-16 flex justify-center opacity-40 hover:opacity-100 transition-opacity duration-500">
-                        <div className="font-display font-bold text-4xl text-white tracking-widest border-2 border-white p-2 rounded-lg">
-                            QM
+                    <div className="mt-16 flex justify-center group/signature">
+                        <div className="relative w-20 h-20 transition-opacity duration-300 opacity-80 hover:opacity-100">
+                            <img
+                                src="/logoquimi copy.svg"
+                                alt="Quimey Morando Logo"
+                                className="w-full h-full object-contain brightness-0 invert"
+                            />
                         </div>
                     </div>
 

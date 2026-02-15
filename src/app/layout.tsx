@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Roboto_Slab } from "next/font/google";
 import "./globals.css";
+import Footer from "@/components/layout/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,6 +18,9 @@ const robotoSlab = Roboto_Slab({
 export const metadata: Metadata = {
   title: "Quimey Morando | Sistema Digital Autónomo",
   description: "Arquitectura de Autonomía Digital y High-Ticket Strategy.",
+  icons: {
+    icon: "/favicon-white.svg",
+  },
 };
 
 export const viewport = {
@@ -38,6 +42,7 @@ export default function RootLayout({
         className={`${inter.variable} ${robotoSlab.variable} antialiased bg-background text-foreground overflow-x-hidden`}
       >
         {children}
+        <Footer />
       </body>
     </html>
   );
