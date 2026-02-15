@@ -128,7 +128,7 @@ export default function FloatingNav() {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setIsOpen(false)}
-                            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+                            className="fixed inset-0 bg-black/80 z-40 md:hidden"
                         />
 
                         {/* Drawer */}
@@ -136,8 +136,8 @@ export default function FloatingNav() {
                             initial={{ x: "100%" }}
                             animate={{ x: 0 }}
                             exit={{ x: "100%" }}
-                            transition={{ type: "spring", damping: 20, stiffness: 100 }}
-                            className="fixed top-0 right-0 bottom-0 w-[280px] bg-[#020617] border-l border-brand-cyan/20 z-50 md:hidden flex flex-col p-6 shadow-2xl"
+                            transition={{ type: "tween", duration: 0.3, ease: "easeOut" }}
+                            className="fixed top-0 right-0 bottom-0 w-[280px] bg-[#020617] border-l border-brand-cyan/20 z-50 md:hidden flex flex-col p-6 shadow-2xl will-change-transform"
                         >
                             <div className="flex flex-col gap-8 mt-20">
                                 {/* Navigation Links */}
