@@ -15,8 +15,7 @@ export default function FloatingNav() {
     const [visible, setVisible] = useState(true);
     const { scrollY } = useScroll();
 
-    // OPTIMIZED SCROLL LOGIC: Only toggle visibility on significant movement
-    // preventing micro-stutters.
+    // OPTIMIZED SCROLL LOGIC
     useMotionValueEvent(scrollY, "change", (current) => {
         if (typeof current === "number") {
             const previous = scrollY.getPrevious() || 0;
@@ -43,7 +42,6 @@ export default function FloatingNav() {
 
     return (
         <>
-            {/* Inject Global Styles for No-Scrollbar */}
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar {
                     display: none;
@@ -61,20 +59,22 @@ export default function FloatingNav() {
                     opacity: visible ? 1 : 0
                 }}
                 transition={{
-                    duration: 0.3,
-                    ease: "easeInOut" // Faster, lighter transition
+                    duration: 0.2, // Faster transition for mobile responsiveness
+                    ease: "easeOut"
                 }}
                 className={cn(
-                    "fixed top-0 left-0 right-0 z-[9999] flex flex-col items-center justify-center pt-2 md:pt-6 px-2 md:px-4 pointer-events-none"
-                    // Removed heavy blur from container, applied to inner elements only
+                    "fixed top-0 left-0 right-0 z-[9999] flex flex-col items-center justify-center pt-2 md:pt-6 px-2 md:px-4 pointer-events-none will-change-transform"
                 )}
             >
                 <div className={cn(
                     "relative w-full max-w-[1200px] pointer-events-auto transition-all duration-300",
                     "flex flex-col gap-2 md:flex-row md:items-center md:justify-between",
                     "rounded-2xl md:rounded-xl",
-                    "bg-[#020617]/90 backdrop-blur-[10px] border border-white/10", // Optimized Blur & Opacity
-                    "shadow-[0_4px_30px_rgba(0,0,0,0.5)]",
+                    // MOBILE OPTIMIZATION: Solid BG (Simulated Dark), No Blur
+                    "bg-[#050A14] md:bg-[#020617]/90",
+                    "backdrop-filter-none md:backdrop-blur-[10px]",
+                    "border border-white/10",
+                    "shadow-lg md:shadow-[0_4px_30px_rgba(0,0,0,0.5)]",
                     "p-3 md:px-8 md:py-4"
                 )}>
 
@@ -93,7 +93,6 @@ export default function FloatingNav() {
                             ) : (
                                 <Link href="/" className="flex items-center gap-3 group">
                                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20 group-hover:bg-brand-cyan/20 transition-colors">
-                                        {/* Optimized Mask Image Logo */}
                                         <div className="w-8 h-8 bg-brand-cyan" style={{ maskImage: "url('/logoquimi%20copy.svg')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/logoquimi%20copy.svg')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
                                     </div>
                                     <span className="text-xl font-bold tracking-tighter text-white font-display group-hover:text-brand-cyan transition-colors">
@@ -110,7 +109,7 @@ export default function FloatingNav() {
                                     key={item.name}
                                     href={item.href}
                                     className={cn(
-                                        "relative px-5 py-2 text-sm font-bold uppercase tracking-widest transition-all duration-300 rounded-lg group overflow-hidden",
+                                        "relative px-5 py-2 text-sm font-bold uppercase tracking-widest transition-all duration-300 rounded-lg group overflow-hidden will-change-transform",
                                         item.color === 'white' ? "text-white/70 hover:text-white" : "text-white hover:text-brand-cyan"
                                     )}
                                 >
@@ -134,7 +133,7 @@ export default function FloatingNav() {
                     </div>
 
 
-                    {/* --- MOBILE LAYOUT (App Nature Style) --- */}
+                    {/* --- MOBILE LAYOUT (Optimized) --- */}
                     <div className="flex flex-col md:hidden w-full gap-3">
 
                         {/* Row 1: Logo & Fixed Contact Button */}
@@ -148,8 +147,14 @@ export default function FloatingNav() {
                                 </span>
                             </Link>
 
-                            <a href="https://wa.me/5492804819907" target="_blank" rel="noopener noreferrer">
-                                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-cyan/10 border border-brand-cyan/30 text-xs font-bold uppercase tracking-wider text-brand-cyan shadow-[0_0_10px_rgba(6,182,212,0.2)]">
+                            <a
+                                href="https://wa.me/5492804819907"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="relative z-[10000] pointer-events-auto"
+                                onClick={() => console.log("Mobile Contact Clicked")}
+                            >
+                                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-cyan/10 border border-brand-cyan/30 text-xs font-bold uppercase tracking-wider text-brand-cyan shadow-[0_0_5px_rgba(6,182,212,0.1)] active:scale-95 transition-transform will-change-transform">
                                     <span>Contactar</span>
                                     <ArrowRight className="w-3 h-3" />
                                 </div>
@@ -168,7 +173,7 @@ export default function FloatingNav() {
                                         key={item.name}
                                         href={item.href}
                                         className={cn(
-                                            "flex-shrink-0 px-5 py-2.5 rounded-full border text-[11px] font-bold uppercase tracking-widest transition-all",
+                                            "flex-shrink-0 px-5 py-2.5 rounded-full border text-[11px] font-bold uppercase tracking-widest transition-all will-change-transform",
                                             "bg-white/5 border-white/10 text-white/80",
                                             "active:scale-95 active:bg-white/10 active:text-white"
                                         )}
@@ -182,8 +187,8 @@ export default function FloatingNav() {
                                 ))}
                             </div>
 
-                            {/* Fade Mask on Right to indicate scroll */}
-                            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#020617] to-transparent pointer-events-none" />
+                            {/* Fade Mask (Lighter/Subtle for speed) */}
+                            <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[#050A14] to-transparent pointer-events-none" />
                         </div>
                     </div>
 

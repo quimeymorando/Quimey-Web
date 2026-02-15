@@ -21,7 +21,7 @@ export default function Hero() {
                         <motion.div
                             animate={{ rotate: 360 }}
                             transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
-                            className="w-full h-full relative flex items-center justify-center"
+                            className="w-full h-full relative flex items-center justify-center will-change-transform"
                         >
                             {/* ENCLOSING CIRCLE 1: Immediate Surround (Double Line) */}
                             <motion.div
@@ -125,7 +125,7 @@ export default function Hero() {
                         <motion.div
                             animate={{ rotate: -360 }}
                             transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-                            className="absolute inset-[25%] border border-dashed border-brand-purple/20 rounded-full"
+                            className="absolute inset-[25%] border border-dashed border-brand-purple/20 rounded-full will-change-transform"
                         />
                     </motion.div>
                 </div>     {/* Floating Particles */}
