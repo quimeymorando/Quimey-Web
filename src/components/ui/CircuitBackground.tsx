@@ -27,7 +27,16 @@ const CircuitBackground: React.FC = () => {
         density: 40, // Lower is denser
     };
 
+    const [isMobile, setIsMobile] = useState(false);
 
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
     useEffect(() => {
         const handleResize = () => {
             if (canvasRef.current) {
@@ -194,6 +203,15 @@ const CircuitBackground: React.FC = () => {
 
         return () => cancelAnimationFrame(animationFrameId);
     }, [dimensions]);
+
+    if (isMobile) {
+        return (
+            <div className="absolute inset-0 z-0 bg-[#020617] opacity-40">
+                {/* Fallback for mobile: Simple gradient or just dark bg */}
+                <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1E]/80 via-transparent to-[#0A0F1E] z-10" />
+            </div>
+        );
+    }
 
     return (
         <div className="absolute inset-0 pointer-events-none z-0 opacity-40">
