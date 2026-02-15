@@ -19,6 +19,18 @@ export default function FloatingNav() {
         setIsOpen(false);
     }, [pathname]);
 
+    // Lock body scroll when menu is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "unset";
+        }
+        return () => {
+            document.body.style.overflow = "unset";
+        };
+    }, [isOpen]);
+
 
 
     return (
@@ -118,65 +130,59 @@ export default function FloatingNav() {
                 </div>
             </div>
 
-            {/* Mobile Sidebar/Drawer */}
-            <AnimatePresence>
-                {isOpen && (
-                    <>
-                        {/* Backdrop */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setIsOpen(false)}
-                            className="fixed inset-0 bg-black/80 z-40 md:hidden"
-                        />
+            {/* Mobile Sidebar/Drawer (Pure CSS/Tailwind) */}
 
-                        {/* Drawer */}
-                        <motion.div
-                            initial={{ x: "100%" }}
-                            animate={{ x: 0 }}
-                            exit={{ x: "100%" }}
-                            transition={{ type: "tween", duration: 0.3, ease: "easeOut" }}
-                            className="fixed top-0 right-0 bottom-0 w-[280px] bg-[#020617] border-l border-brand-cyan/20 z-50 md:hidden flex flex-col p-6 shadow-2xl will-change-transform"
-                        >
-                            <div className="flex flex-col gap-8 mt-20">
-                                {/* Navigation Links */}
-                                <div className="flex flex-col gap-4">
-                                    {[
-                                        { name: "Cursos", href: "/cursos", color: "purple" },
-                                        { name: "Productos", href: "/productos", color: "purple" },
-                                        { name: "Agencia", href: "/agencia", color: "cyan" },
-                                        { name: "Roadmap", href: "/roadmap", color: "white" }
-                                    ].map((item) => (
-                                        <Link
-                                            key={item.name}
-                                            href={item.href}
-                                            onClick={() => setIsOpen(false)}
-                                            className="group relative px-6 py-4 text-lg font-bold uppercase tracking-widest text-white transition-all duration-300 rounded-xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/30"
-                                        >
-                                            <div className={`absolute inset-0 bg-${item.color === 'cyan' ? 'brand-cyan' : item.color === 'purple' ? 'brand-purple' : 'brand-lilac'}/0 group-hover:bg-${item.color === 'cyan' ? 'brand-cyan' : item.color === 'purple' ? 'brand-purple' : 'brand-lilac'}/10 transition-colors duration-300`} />
-                                            <span className="relative z-10 flex items-center justify-between">
-                                                {item.name}
-                                                <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
-                                            </span>
-                                        </Link>
-                                    ))}
-                                </div>
-
-                                {/* Divider */}
-                                <div className="h-px w-full bg-white/10" />
-
-                                {/* CTA */}
-                                <a href="https://wa.me/5492804819907" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}>
-                                    <FuturistButton className="w-full justify-center !py-4 text-base" icon={<ArrowRight className="w-5 h-5" />}>
-                                        Contactar
-                                    </FuturistButton>
-                                </a>
-                            </div>
-                        </motion.div>
-                    </>
+            {/* Backdrop */}
+            <div
+                className={cn(
+                    "fixed inset-0 bg-black/80 z-40 md:hidden transition-opacity duration-300",
+                    isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                 )}
-            </AnimatePresence>
+                onClick={() => setIsOpen(false)}
+            />
+
+            {/* Drawer */}
+            <div
+                className={cn(
+                    "fixed top-0 right-0 bottom-0 w-[280px] bg-[#020617] border-l border-brand-cyan/20 z-50 md:hidden flex flex-col p-6 shadow-2xl transition-transform duration-300 ease-out will-change-transform",
+                    isOpen ? "translate-x-0" : "translate-x-full"
+                )}
+            >
+                <div className="flex flex-col gap-8 mt-20">
+                    {/* Navigation Links */}
+                    <div className="flex flex-col gap-4">
+                        {[
+                            { name: "Cursos", href: "/cursos", color: "purple" },
+                            { name: "Productos", href: "/productos", color: "purple" },
+                            { name: "Agencia", href: "/agencia", color: "cyan" },
+                            { name: "Roadmap", href: "/roadmap", color: "white" }
+                        ].map((item) => (
+                            <Link
+                                key={item.name}
+                                href={item.href}
+                                onClick={() => setIsOpen(false)}
+                                className="group relative px-6 py-4 text-lg font-bold uppercase tracking-widest text-white transition-all duration-300 rounded-xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/30"
+                            >
+                                <div className={`absolute inset-0 bg-${item.color === 'cyan' ? 'brand-cyan' : item.color === 'purple' ? 'brand-purple' : 'brand-lilac'}/0 group-hover:bg-${item.color === 'cyan' ? 'brand-cyan' : item.color === 'purple' ? 'brand-purple' : 'brand-lilac'}/10 transition-colors duration-300`} />
+                                <span className="relative z-10 flex items-center justify-between">
+                                    {item.name}
+                                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+                                </span>
+                            </Link>
+                        ))}
+                    </div>
+
+                    {/* Divider */}
+                    <div className="h-px w-full bg-white/10" />
+
+                    {/* CTA */}
+                    <a href="https://wa.me/5492804819907" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}>
+                        <FuturistButton className="w-full justify-center !py-4 text-base" icon={<ArrowRight className="w-5 h-5" />}>
+                            Contactar
+                        </FuturistButton>
+                    </a>
+                </div>
+            </div>
         </motion.nav>
     );
 }
