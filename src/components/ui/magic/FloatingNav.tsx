@@ -135,7 +135,7 @@ export default function FloatingNav() {
             {/* Backdrop */}
             <div
                 className={cn(
-                    "fixed inset-0 bg-black/80 z-40 md:hidden transition-opacity duration-300",
+                    "fixed inset-0 bg-black/80 z-[60] md:hidden transition-opacity duration-300",
                     isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                 )}
                 onClick={() => setIsOpen(false)}
@@ -144,11 +144,20 @@ export default function FloatingNav() {
             {/* Drawer */}
             <div
                 className={cn(
-                    "fixed top-0 right-0 bottom-0 w-[280px] bg-[#020617] border-l border-brand-cyan/20 z-50 md:hidden flex flex-col p-6 shadow-2xl transition-transform duration-300 ease-out will-change-transform",
+                    "fixed top-0 right-0 bottom-0 w-[85%] max-w-[320px] bg-[#020617] border-l border-brand-cyan/20 z-[70] md:hidden flex flex-col p-6 shadow-2xl transition-transform duration-300 ease-out will-change-transform",
                     isOpen ? "translate-x-0" : "translate-x-full"
                 )}
             >
-                <div className="flex flex-col gap-8 mt-20">
+                <div className="flex justify-end mb-8">
+                    <button
+                        onClick={() => setIsOpen(false)}
+                        className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
+                    >
+                        <X className="w-6 h-6" />
+                    </button>
+                </div>
+
+                <div className="flex flex-col gap-8">
                     {/* Navigation Links */}
                     <div className="flex flex-col gap-4">
                         {[
