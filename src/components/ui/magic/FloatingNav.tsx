@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { ArrowRight, Menu, ArrowLeft, House, X } from "lucide-react";
-import { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useState } from "react";
 import FuturistButton from "@/components/ui/FuturistButton";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -12,15 +12,27 @@ import { usePathname } from "next/navigation";
 export default function FloatingNav() {
     const pathname = usePathname();
     const isHome = pathname === "/";
-    const [scrolled, setScrolled] = useState(false);
+    const [visible, setVisible] = useState(true);
+    const { scrollY } = useScroll();
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    // OPTIMIZED SCROLL LOGIC: Only toggle visibility on significant movement
+    // preventing micro-stutters.
+    useMotionValueEvent(scrollY, "change", (current) => {
+        if (typeof current === "number") {
+            const previous = scrollY.getPrevious() || 0;
+            const direction = current - previous;
+
+            if (scrollY.get() < 50) {
+                setVisible(true);
+            } else {
+                if (direction < 0) {
+                    setVisible(true);
+                } else {
+                    setVisible(false);
+                }
+            }
+        }
+    });
 
     const navItems = [
         { name: "Cursos", href: "/cursos", color: "purple" },
@@ -30,109 +42,153 @@ export default function FloatingNav() {
     ];
 
     return (
-        <motion.nav
-            initial={{ y: -100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className={cn(
-                "fixed top-4 left-0 right-0 z-50 flex justify-center px-4 transition-all duration-300",
-                scrolled ? "top-2" : "top-6"
-            )}
-        >
-            <div className={cn(
-                "glass-nav flex flex-col md:flex-row items-center justify-between rounded-2xl md:rounded-xl px-4 py-3 md:px-8 md:py-4 w-full max-w-[1200px] transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.15)]",
-                scrolled ? "py-2 md:py-3 bg-black/80 backdrop-blur-xl border-brand-cyan/20" : ""
-            )}>
+        <>
+            {/* Inject Global Styles for No-Scrollbar */}
+            <style jsx global>{`
+                .no-scrollbar::-webkit-scrollbar {
+                    display: none;
+                }
+                .no-scrollbar {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+            `}</style>
 
-                {/* Desktop Layout (Hidden on Mobile) */}
-                <div className="hidden md:flex items-center justify-between w-full">
-                    {/* Left Section */}
-                    <div className="flex items-center gap-4">
-                        {!isHome ? (
-                            <Link
-                                href="/"
-                                className="relative z-50 flex items-center gap-2 text-sm font-medium text-brand-cyan transition-colors hover:text-white uppercase tracking-widest bg-brand-cyan/5 px-4 py-2 rounded-lg border border-brand-cyan/20 hover:bg-brand-cyan/10"
-                            >
-                                <ArrowLeft className="w-4 h-4" />
-                                <span>Volver al Inicio</span>
-                            </Link>
-                        ) : (
-                            <Link href="/" className="flex items-center gap-3 group relative z-50">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20 group-hover:bg-brand-cyan/20 transition-colors">
-                                    <div className="w-9 h-9 bg-brand-cyan" style={{ maskImage: "url('/logoquimi%20copy.svg')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/logoquimi%20copy.svg')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
-                                </div>
-                                <span className="text-xl font-bold tracking-tighter text-white font-display group-hover:text-brand-cyan transition-colors">
-                                    QUIMEY MORANDO
-                                </span>
-                            </Link>
-                        )}
-                    </div>
+            <motion.nav
+                initial={{ y: 0, opacity: 1 }}
+                animate={{
+                    y: visible ? 0 : -100,
+                    opacity: visible ? 1 : 0
+                }}
+                transition={{
+                    duration: 0.3,
+                    ease: "easeInOut" // Faster, lighter transition
+                }}
+                className={cn(
+                    "fixed top-0 left-0 right-0 z-[9999] flex flex-col items-center justify-center pt-2 md:pt-6 px-2 md:px-4 pointer-events-none"
+                    // Removed heavy blur from container, applied to inner elements only
+                )}
+            >
+                <div className={cn(
+                    "relative w-full max-w-[1200px] pointer-events-auto transition-all duration-300",
+                    "flex flex-col gap-2 md:flex-row md:items-center md:justify-between",
+                    "rounded-2xl md:rounded-xl",
+                    "bg-[#020617]/90 backdrop-blur-[10px] border border-white/10", // Optimized Blur & Opacity
+                    "shadow-[0_4px_30px_rgba(0,0,0,0.5)]",
+                    "p-3 md:px-8 md:py-4"
+                )}>
 
-                    {/* Center Section */}
-                    <div className="flex items-center gap-8">
-                        {isHome && navItems.map((item) => (
-                            <Link
-                                key={item.name}
-                                href={item.href}
-                                className="relative px-4 py-2 text-sm font-bold uppercase tracking-widest text-white transition-all duration-300 rounded-lg group overflow-hidden hover:text-brand-cyan"
-                            >
-                                <span className="relative z-10">{item.name}</span>
-                                <div className={cn(
-                                    "absolute inset-0 border border-transparent rounded-lg transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(0,240,255,0.3)]",
-                                    item.color === 'cyan' ? "group-hover:border-brand-cyan" : "group-hover:border-brand-purple"
-                                )} />
-                            </Link>
-                        ))}
-                    </div>
+                    {/* --- DESKTOP LAYOUT --- */}
+                    <div className="hidden md:flex items-center justify-between w-full">
+                        {/* Left: Logo / Back */}
+                        <div className="flex items-center gap-4 min-w-[200px]">
+                            {!isHome ? (
+                                <Link
+                                    href="/"
+                                    className="flex items-center gap-2 text-sm font-medium text-brand-cyan hover:text-white transition-colors uppercase tracking-widest px-4 py-2 rounded-lg hover:bg-white/5"
+                                >
+                                    <ArrowLeft className="w-4 h-4" />
+                                    <span>Inicio</span>
+                                </Link>
+                            ) : (
+                                <Link href="/" className="flex items-center gap-3 group">
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20 group-hover:bg-brand-cyan/20 transition-colors">
+                                        {/* Optimized Mask Image Logo */}
+                                        <div className="w-8 h-8 bg-brand-cyan" style={{ maskImage: "url('/logoquimi%20copy.svg')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/logoquimi%20copy.svg')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
+                                    </div>
+                                    <span className="text-xl font-bold tracking-tighter text-white font-display group-hover:text-brand-cyan transition-colors">
+                                        QUIMEY
+                                    </span>
+                                </Link>
+                            )}
+                        </div>
 
-                    {/* Right Section */}
-                    <div className="flex items-center gap-4">
-                        <a href="https://wa.me/5492804819907" target="_blank" rel="noopener noreferrer">
-                            <FuturistButton className="!py-2 !px-6 text-sm" icon={<ArrowRight className="w-4 h-4" />}>
-                                Contactar
-                            </FuturistButton>
-                        </a>
-                    </div>
-                </div>
-
-                {/* Mobile Layout (Visible ONLY on Mobile) */}
-                <div className="flex md:hidden flex-col w-full gap-3">
-                    {/* Top Row: Logo & Contact Icon */}
-                    <div className="flex items-center justify-between w-full px-1">
-                        <Link href="/" className="flex items-center gap-2 group">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20">
-                                <div className="w-6 h-6 bg-brand-cyan" style={{ maskImage: "url('/logoquimi%20copy.svg')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/logoquimi%20copy.svg')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
-                            </div>
-                            <span className="text-sm font-bold tracking-tighter text-white font-display">
-                                QUIMEY
-                            </span>
-                        </Link>
-
-                        <a href="https://wa.me/5492804819907" target="_blank" rel="noopener noreferrer">
-                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-[10px] font-bold uppercase tracking-wider text-brand-cyan">
-                                <span>Contactar</span>
-                                <ArrowRight className="w-3 h-3" />
-                            </div>
-                        </a>
-                    </div>
-
-                    {/* Bottom Row: Inline Scrollable Links (Delicate Buttons) */}
-                    <div className="w-full overflow-x-auto no-scrollbar pb-1 -mx-4 px-4">
-                        <div className="flex items-center gap-3 min-w-max pr-8">
+                        {/* Center: Nav Items */}
+                        <div className="flex items-center gap-2">
                             {navItems.map((item) => (
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[11px] font-medium uppercase tracking-wider text-white/90 whitespace-nowrap hover:bg-white/10 hover:text-white transition-colors active:scale-95 touch-manipulation"
+                                    className={cn(
+                                        "relative px-5 py-2 text-sm font-bold uppercase tracking-widest transition-all duration-300 rounded-lg group overflow-hidden",
+                                        item.color === 'white' ? "text-white/70 hover:text-white" : "text-white hover:text-brand-cyan"
+                                    )}
                                 >
-                                    {item.name}
+                                    <div className={cn(
+                                        "absolute inset-0 border border-transparent rounded-lg transition-all duration-300",
+                                        "group-hover:border-white/20 group-hover:bg-white/5"
+                                    )} />
+                                    <span className="relative z-10">{item.name}</span>
                                 </Link>
                             ))}
                         </div>
-                    </div>
-                </div>
 
-            </div>
-        </motion.nav>
+                        {/* Right: Contact */}
+                        <div className="flex items-center justify-end min-w-[200px]">
+                            <a href="https://wa.me/5492804819907" target="_blank" rel="noopener noreferrer">
+                                <FuturistButton className="!py-2 !px-6 text-xs" icon={<ArrowRight className="w-4 h-4" />}>
+                                    Contactar
+                                </FuturistButton>
+                            </a>
+                        </div>
+                    </div>
+
+
+                    {/* --- MOBILE LAYOUT (App Nature Style) --- */}
+                    <div className="flex flex-col md:hidden w-full gap-3">
+
+                        {/* Row 1: Logo & Fixed Contact Button */}
+                        <div className="flex items-center justify-between w-full px-1">
+                            <Link href="/" className="flex items-center gap-2">
+                                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-cyan/10 border border-brand-cyan/20">
+                                    <div className="w-6 h-6 bg-brand-cyan" style={{ maskImage: "url('/logoquimi%20copy.svg')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/logoquimi%20copy.svg')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
+                                </div>
+                                <span className="text-base font-bold tracking-tight text-white font-display">
+                                    QUIMEY
+                                </span>
+                            </Link>
+
+                            <a href="https://wa.me/5492804819907" target="_blank" rel="noopener noreferrer">
+                                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-cyan/10 border border-brand-cyan/30 text-xs font-bold uppercase tracking-wider text-brand-cyan shadow-[0_0_10px_rgba(6,182,212,0.2)]">
+                                    <span>Contactar</span>
+                                    <ArrowRight className="w-3 h-3" />
+                                </div>
+                            </a>
+                        </div>
+
+                        {/* Row 2: Horizontal Scroll Navigation */}
+                        <div className="w-full relative">
+                            {/* Scroll Container */}
+                            <div
+                                className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-1 px-1 w-full whitespace-nowrap"
+                                style={{ WebkitOverflowScrolling: "touch" }}
+                            >
+                                {navItems.map((item, idx) => (
+                                    <Link
+                                        key={item.name}
+                                        href={item.href}
+                                        className={cn(
+                                            "flex-shrink-0 px-5 py-2.5 rounded-full border text-[11px] font-bold uppercase tracking-widest transition-all",
+                                            "bg-white/5 border-white/10 text-white/80",
+                                            "active:scale-95 active:bg-white/10 active:text-white"
+                                        )}
+                                        style={{
+                                            // Add extra margin to the last item for safety
+                                            marginRight: idx === navItems.length - 1 ? "20px" : "0px"
+                                        }}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                ))}
+                            </div>
+
+                            {/* Fade Mask on Right to indicate scroll */}
+                            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#020617] to-transparent pointer-events-none" />
+                        </div>
+                    </div>
+
+                </div>
+            </motion.nav>
+        </>
     );
 }
