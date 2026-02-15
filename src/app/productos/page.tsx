@@ -23,7 +23,7 @@ export default function ProductsPage() {
                     transition={{ duration: 1, ease: "easeOut" }}
                     className="relative mb-8"
                 >
-                    <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-widest uppercase drop-shadow-[0_0_30px_rgba(0,255,255,0.6)]">
+                    <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-widest uppercase drop-shadow-[0_0_30px_rgba(0,255,255,0.6)] px-4 text-balance break-words">
                         PRÓXIMAMENTE
                     </h1>
 
