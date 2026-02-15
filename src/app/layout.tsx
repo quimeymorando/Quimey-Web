@@ -18,15 +18,6 @@ const robotoSlab = Roboto_Slab({
 export const metadata: Metadata = {
   title: "Quimey Morando | Sistema Digital Autónomo",
   description: "Arquitectura de Autonomía Digital y High-Ticket Strategy.",
-  icons: {
-    icon: [
-      { url: "/favicon-white.svg", type: "image/svg+xml" },
-    ],
-    shortcut: ["/favicon-white.svg"],
-    apple: [
-      { url: "/favicon-white.svg", type: "image/svg+xml" },
-    ],
-  },
 };
 
 export const viewport = {
