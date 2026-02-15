@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { ArrowRight, Menu, ArrowLeft, House } from "lucide-react";
+import { ArrowRight, Menu, ArrowLeft, House, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 import FuturistButton from "@/components/ui/FuturistButton";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -10,6 +12,12 @@ import { usePathname } from "next/navigation";
 export default function FloatingNav() {
     const pathname = usePathname();
     const isHome = pathname === "/";
+    const [isOpen, setIsOpen] = useState(false);
+
+    // Close menu on route change
+    useEffect(() => {
+        setIsOpen(false);
+    }, [pathname]);
 
 
 
@@ -26,13 +34,13 @@ export default function FloatingNav() {
                     {!isHome ? (
                         <Link
                             href="/"
-                            className="flex items-center gap-2 text-sm font-medium text-brand-cyan transition-colors hover:text-white uppercase tracking-widest bg-brand-cyan/5 px-4 py-2 rounded-lg border border-brand-cyan/20 hover:bg-brand-cyan/10"
+                            className="relative z-50 flex items-center gap-2 text-sm font-medium text-brand-cyan transition-colors hover:text-white uppercase tracking-widest bg-brand-cyan/5 px-4 py-2 rounded-lg border border-brand-cyan/20 hover:bg-brand-cyan/10"
                         >
                             <ArrowLeft className="w-4 h-4" />
                             <span className="hidden md:inline">Volver al Inicio</span>
                         </Link>
                     ) : (
-                        <Link href="/" className="flex items-center gap-3 group">
+                        <Link href="/" className="flex items-center gap-3 group relative z-50">
                             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20 group-hover:bg-brand-cyan/20 transition-colors">
                                 <div className="w-9 h-9 bg-brand-cyan" style={{ maskImage: "url('/logoquimi%20copy.svg')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/logoquimi%20copy.svg')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
                             </div>
@@ -41,6 +49,13 @@ export default function FloatingNav() {
                             </span>
                         </Link>
                     )}
+                </div>
+
+                {/* Mobile Centered Logo (Absolute) */}
+                <div className="md:hidden absolute left-1/2 -translate-x-1/2 flex items-center justify-center pointer-events-none">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20 backdrop-blur-md">
+                        <div className="w-10 h-10 bg-brand-cyan" style={{ maskImage: "url('/logoquimi%20copy.svg')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/logoquimi%20copy.svg')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
+                    </div>
                 </div>
 
                 {/* Center Section */}
@@ -94,11 +109,74 @@ export default function FloatingNav() {
                             Contactar
                         </FuturistButton>
                     </a>
-                    <button className="flex h-10 w-10 items-center justify-center rounded-lg text-white md:hidden hover:bg-white/10 transition-colors">
-                        <Menu className="w-6 h-6" />
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="relative z-50 flex h-10 w-10 items-center justify-center rounded-lg text-white md:hidden hover:bg-white/10 transition-colors"
+                    >
+                        {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                     </button>
                 </div>
             </div>
+
+            {/* Mobile Sidebar/Drawer */}
+            <AnimatePresence>
+                {isOpen && (
+                    <>
+                        {/* Backdrop */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setIsOpen(false)}
+                            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+                        />
+
+                        {/* Drawer */}
+                        <motion.div
+                            initial={{ x: "100%" }}
+                            animate={{ x: 0 }}
+                            exit={{ x: "100%" }}
+                            transition={{ type: "spring", damping: 20, stiffness: 100 }}
+                            className="fixed top-0 right-0 bottom-0 w-[280px] bg-[#020617] border-l border-brand-cyan/20 z-50 md:hidden flex flex-col p-6 shadow-2xl"
+                        >
+                            <div className="flex flex-col gap-8 mt-20">
+                                {/* Navigation Links */}
+                                <div className="flex flex-col gap-4">
+                                    {[
+                                        { name: "Cursos", href: "/cursos", color: "purple" },
+                                        { name: "Productos", href: "/productos", color: "purple" },
+                                        { name: "Agencia", href: "/agencia", color: "cyan" },
+                                        { name: "Roadmap", href: "/roadmap", color: "white" }
+                                    ].map((item) => (
+                                        <Link
+                                            key={item.name}
+                                            href={item.href}
+                                            onClick={() => setIsOpen(false)}
+                                            className="group relative px-6 py-4 text-lg font-bold uppercase tracking-widest text-white transition-all duration-300 rounded-xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/30"
+                                        >
+                                            <div className={`absolute inset-0 bg-${item.color === 'cyan' ? 'brand-cyan' : item.color === 'purple' ? 'brand-purple' : 'brand-lilac'}/0 group-hover:bg-${item.color === 'cyan' ? 'brand-cyan' : item.color === 'purple' ? 'brand-purple' : 'brand-lilac'}/10 transition-colors duration-300`} />
+                                            <span className="relative z-10 flex items-center justify-between">
+                                                {item.name}
+                                                <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+                                            </span>
+                                        </Link>
+                                    ))}
+                                </div>
+
+                                {/* Divider */}
+                                <div className="h-px w-full bg-white/10" />
+
+                                {/* CTA */}
+                                <a href="https://wa.me/5492804819907" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}>
+                                    <FuturistButton className="w-full justify-center !py-4 text-base" icon={<ArrowRight className="w-5 h-5" />}>
+                                        Contactar
+                                    </FuturistButton>
+                                </a>
+                            </div>
+                        </motion.div>
+                    </>
+                )}
+            </AnimatePresence>
         </motion.nav>
     );
 }
