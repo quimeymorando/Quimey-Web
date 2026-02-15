@@ -40,11 +40,11 @@ export default function FloatingNav() {
                             <span className="hidden md:inline">Volver al Inicio</span>
                         </Link>
                     ) : (
-                        <Link href="/" className="flex items-center gap-3 group relative z-50">
+                        <Link href="/" className="hidden md:flex items-center gap-3 group relative z-50">
                             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20 group-hover:bg-brand-cyan/20 transition-colors">
                                 <div className="w-9 h-9 bg-brand-cyan" style={{ maskImage: "url('/logoquimi%20copy.svg')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/logoquimi%20copy.svg')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
                             </div>
-                            <span className="hidden md:inline text-xl font-bold tracking-tighter text-white font-display group-hover:text-brand-cyan transition-colors">
+                            <span className="text-xl font-bold tracking-tighter text-white font-display group-hover:text-brand-cyan transition-colors">
                                 QUIMEY MORANDO
                             </span>
                         </Link>
