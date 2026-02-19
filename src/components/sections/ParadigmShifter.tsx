@@ -24,6 +24,10 @@ const faqItems = [
     {
         question: "¿Es este el momento adecuado o debería esperar a que la IA madure?",
         answer: "El mercado se divide hoy entre los Mesmerizados (los que miran la tecnología) y los Manipuladores (los que la orquestan). Esperar un año en la frontera tecnológica actual equivale a una década de retraso competitivo. Instalar autonomía hoy es la mayor ventaja injusta que puedes tener frente a quienes siguen operando de forma manual."
+    },
+    {
+        question: "¿Cómo es el proceso de onboarding y cuánto tiempo hasta ver resultados?",
+        answer: "El proceso comienza con un Diagnóstico de Ecosistema donde identificamos las fugas de tiempo y dinero en tu operación actual. En los primeros 30 días instalamos la infraestructura base: identidad ciber-espiritual, agentes autónomos y sistema de conversión. Los primeros resultados medibles suelen aparecer en el primer mes. No hay un proceso de meses de espera; construimos activos que empiezan a operar desde el primer ciclo."
     }
 ];
 

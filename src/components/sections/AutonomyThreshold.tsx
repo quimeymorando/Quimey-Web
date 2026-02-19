@@ -81,10 +81,12 @@ export default function AutonomyThreshold() {
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                animate={{ boxShadow: ["0 0 20px rgba(208,0,255,0.3)", "0 0 40px rgba(208,0,255,0.6)", "0 0 20px rgba(208,0,255,0.3)"] }}
+                                animate={{ boxShadow: ["0 0 20px rgba(0,240,255,0.3)", "0 0 40px rgba(208,0,255,0.6)", "0 0 20px rgba(0,240,255,0.3)"] }}
                                 transition={{ duration: 2, repeat: Infinity }}
-                                className="relative bg-brand-purple text-white font-bold text-xl px-12 py-5 rounded-xl uppercase tracking-wider overflow-hidden group"
+                                className="relative text-white font-bold text-lg md:text-xl px-10 md:px-12 py-4 md:py-5 rounded-xl uppercase tracking-wider overflow-hidden group"
                             >
+                                {/* Gradient background */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-brand-cyan to-brand-purple" />
                                 <span className="relative z-10 flex items-center gap-3">
                                     Aplicar al Sistema de Autonomía <ArrowRight className="w-5 h-5" />
                                 </span>
@@ -101,7 +103,7 @@ export default function AutonomyThreshold() {
                     <div className="mt-16 flex justify-center group/signature">
                         <div className="relative w-20 h-20 transition-opacity duration-300 opacity-80 hover:opacity-100">
                             <img
-                                src="/logoquimi copy.svg"
+                                src="/logoquimi.svg"
                                 alt="Quimey Morando Logo"
                                 className="w-full h-full object-contain brightness-0 invert"
                             />

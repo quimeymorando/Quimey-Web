@@ -22,7 +22,7 @@ export default function RoadmapCTA() {
                 className="w-full max-w-4xl glass-card rounded-xl p-10 md:p-20 text-center border border-brand-cyan/20 bg-gradient-to-b from-brand-purple/5 to-[#0a0a12] relative overflow-hidden"
             >
                 {/* Background Glows */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-brand-cyan/5 blur-[100px] pointer-events-none" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-brand-cyan/5 blur-[40px] md:blur-[100px] pointer-events-none" />
 
                 <h2 className="text-4xl md:text-6xl font-black font-display tracking-tighter text-white mb-8 relative z-10">
                     TU ECOSISTEMA ESTÁ <br />

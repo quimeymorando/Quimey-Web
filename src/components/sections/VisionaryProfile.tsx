@@ -9,7 +9,7 @@ export default function VisionaryProfile() {
         <section className="relative w-full py-32 overflow-hidden bg-background">
             {/* Background Accents */}
 
-            <div className="absolute bottom-[-10%] right-[-5%] w-[40%] h-[40%] bg-brand-cyan/10 rounded-full blur-[120px]" />
+            <div className="absolute bottom-[-10%] right-[-5%] w-[40%] h-[40%] bg-brand-cyan/10 rounded-full blur-[40px] md:blur-[120px]" />
 
             <div className="max-w-7xl mx-auto px-6 lg:px-20 relative z-10">
                 <div className="flex flex-col lg:grid lg:grid-cols-2 gap-16 items-center">
@@ -84,7 +84,7 @@ export default function VisionaryProfile() {
                                 <div className="w-32 h-1 bg-cyan-400/10" />
                             </div>
 
-                            <div className="absolute bottom-8 left-8 flex items-center gap-3 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-brand-cyan/30 z-20">
+                            <div className="absolute bottom-8 left-8 flex items-center gap-3 bg-black/60 px-4 py-2 rounded-full border border-brand-cyan/30 z-20">
                                 <div className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse" />
                                 <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-brand-cyan">Identidad Biométrica Verificada</span>
                             </div>

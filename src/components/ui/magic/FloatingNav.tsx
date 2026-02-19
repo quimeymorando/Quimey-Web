@@ -93,7 +93,7 @@ export default function FloatingNav() {
                             ) : (
                                 <Link href="/" className="flex items-center gap-3 group">
                                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20 group-hover:bg-brand-cyan/20 transition-colors">
-                                        <div className="w-8 h-8 bg-brand-cyan" style={{ maskImage: "url('/logoquimi%20copy.svg')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/logoquimi%20copy.svg')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
+                                        <div className="w-8 h-8 bg-brand-cyan" style={{ maskImage: "url('/logoquimi.svg')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/logoquimi.svg')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
                                     </div>
                                     <span className="text-xl font-bold tracking-tighter text-white font-display group-hover:text-brand-cyan transition-colors">
                                         QUIMEY
@@ -140,7 +140,7 @@ export default function FloatingNav() {
                         <div className="flex items-center justify-between w-full px-1">
                             <Link href="/" className="flex items-center gap-2">
                                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-cyan/10 border border-brand-cyan/20">
-                                    <div className="w-6 h-6 bg-brand-cyan" style={{ maskImage: "url('/logoquimi%20copy.svg')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/logoquimi%20copy.svg')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
+                                    <div className="w-6 h-6 bg-brand-cyan" style={{ maskImage: "url('/logoquimi.svg')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/logoquimi.svg')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
                                 </div>
                                 <span className="text-base font-bold tracking-tight text-white font-display">
                                     QUIMEY

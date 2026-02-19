@@ -23,7 +23,7 @@ export default function AgencyPage() {
             <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-brand-purple/5 blur-[120px] z-0 rounded-full" />
 
             {/* SECTION 0: THE MANIFESTO (HERO) */}
-            <section className="relative w-full pt-48 pb-32 px-6 z-10 text-center">
+            <section className="relative w-full pt-28 md:pt-48 pb-32 px-6 z-10 text-center">
                 <div className="max-w-4xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -47,7 +47,7 @@ export default function AgencyPage() {
             </section>
 
             {/* SECTION 1: WEB ARCHITECTURE */}
-            <section className="relative w-full py-32 px-6 z-10">
+            <section className="relative w-full py-16 md:py-32 px-6 z-10">
                 <div className="max-w-7xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -119,7 +119,7 @@ export default function AgencyPage() {
             </section>
 
             {/* SECTION 2: CONVERSATION INTELLIGENCE */}
-            <section className="relative w-full py-32 px-6 z-10 bg-gradient-to-b from-transparent to-[#0A0F1E]">
+            <section className="relative w-full py-16 md:py-32 px-6 z-10 bg-gradient-to-b from-transparent to-[#0A0F1E]">
                 <div className="absolute inset-0 bg-brand-purple/5 skew-y-3 z-0 pointer-events-none" />
                 <div className="max-w-7xl mx-auto relative z-10">
                     <motion.div
@@ -176,7 +176,7 @@ export default function AgencyPage() {
             </section>
 
             {/* SECTION 3: CONNECTION & CLOSING */}
-            <section className="relative w-full py-32 px-6 z-10">
+            <section className="relative w-full py-16 md:py-32 px-6 z-10">
                 <div className="max-w-7xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -275,7 +275,7 @@ export default function AgencyPage() {
                             >
                                 <div className="flex items-start gap-6">
                                     <div className="p-3 rounded-lg bg-brand-cyan/10 text-brand-cyan group-hover:scale-110 transition-transform duration-300">
-                                        <MessageSquare className="w-6 h-6" /> {/* Icono Cerebro/Psicología (simulado con MessageSquare por ahora, o Brain si está disponible) */}
+                                        <MessageSquare className="w-6 h-6" />
                                     </div>
                                     <div>
                                         <h4 className="text-xl font-bold text-white mb-2 group-hover:text-brand-cyan transition-colors">Fase 1: Psicología & Guionado</h4>

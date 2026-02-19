@@ -14,7 +14,7 @@ export default function RoadmapHero() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, ease: "easeOut" }}
-                    className="glass-card p-8 md:p-16 rounded-xl border border-brand-cyan/20 relative backdrop-blur-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)]"
+                    className="glass-card p-8 md:p-16 rounded-xl border border-brand-cyan/20 relative shadow-[0_0_50px_rgba(0,0,0,0.5)]"
                 >
                     {/* Glowing Borders */}
                     <div className="absolute top-0 left-0 w-32 h-1 bg-gradient-to-r from-brand-cyan to-transparent rounded-full opacity-70" />

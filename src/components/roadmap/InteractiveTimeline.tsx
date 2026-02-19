@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Scan, BrainCircuit, Cpu, TrendingUp } from "lucide-react";
+import { useMobile } from "@/hooks/useMobile";
 
 const phases = [
     {
@@ -33,7 +34,10 @@ const phases = [
 ];
 
 export default function InteractiveTimeline() {
+    const isMobile = useMobile();
     const containerRef = useRef<HTMLDivElement>(null);
+
+    // Solo activamos useScroll en desktop — en mobile es innecesario y drena batería
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start end", "end start"],
@@ -46,15 +50,19 @@ export default function InteractiveTimeline() {
                 {/* Central Energy Beam (Background) */}
                 <div className="absolute left-[39px] md:left-1/2 top-0 bottom-0 w-[2px] bg-white/5 -translate-x-1/2 z-0" />
 
-                {/* Active Energy Beam (Animated) */}
-                <motion.div
-                    style={{ scaleY: scrollYProgress }}
-                    className="absolute left-[39px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-brand-cyan via-brand-white to-brand-purple -translate-x-1/2 origin-top z-10 shadow-[0_0_20px_rgba(0,240,255,0.5)]"
-                />
+                {/* Active Energy Beam — scroll animated on desktop, static faded on mobile */}
+                {isMobile ? (
+                    <div className="absolute left-[39px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-brand-cyan via-brand-purple to-transparent -translate-x-1/2 z-10 opacity-40" />
+                ) : (
+                    <motion.div
+                        style={{ scaleY: scrollYProgress }}
+                        className="absolute left-[39px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-brand-cyan via-brand-white to-brand-purple -translate-x-1/2 origin-top z-10 shadow-[0_0_20px_rgba(0,240,255,0.5)]"
+                    />
+                )}
 
-                <div className="space-y-32">
+                <div className="space-y-16 md:space-y-32">
                     {phases.map((phase, index) => (
-                        <RoadmapItem key={index} phase={phase} index={index} />
+                        <RoadmapItem key={index} phase={phase} index={index} isMobile={isMobile} />
                     ))}
                 </div>
             </div>
@@ -62,25 +70,26 @@ export default function InteractiveTimeline() {
     );
 }
 
-function RoadmapItem({ phase, index }: { phase: any; index: number }) {
+function RoadmapItem({ phase, index, isMobile }: { phase: any; index: number; isMobile: boolean }) {
     const isEven = index % 2 === 0;
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            // En mobile: animación simple de fade-in, sin translate (más liviana)
+            initial={{ opacity: 0, y: isMobile ? 20 : 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: isMobile ? 0.4 : 0.8 }}
             className={`relative flex flex-col md:flex-row items-start md:items-center w-full gap-8 md:gap-0 ${isEven ? "md:flex-row" : "md:flex-row-reverse"
                 }`}
         >
-            {/* Center Node (Icon) */}
+            {/* Center Node (Icon) — sin backdrop-blur en mobile */}
             <div className="absolute left-[39px] md:left-1/2 -translate-x-1/2 z-20">
                 <div className={`
-                    w-12 h-12 md:w-16 md:h-16 rounded-lg flex items-center justify-center border-2 backdrop-blur-md transition-all duration-500
+                    w-12 h-12 md:w-16 md:h-16 rounded-lg flex items-center justify-center border-2 transition-all duration-500
                     ${phase.highlight
-                        ? "bg-brand-cyan/20 border-brand-cyan shadow-[0_0_40px_rgba(0,240,255,0.4)]"
-                        : "bg-[#0a0a12] border-brand-purple/50 shadow-[0_0_20px_rgba(168,85,247,0.2)]"}
+                        ? "bg-brand-cyan/20 border-brand-cyan shadow-[0_0_30px_rgba(0,240,255,0.3)]"
+                        : "bg-[#0a0a12] border-brand-purple/50"}
                 `}>
                     <phase.icon className={`w-6 h-6 md:w-8 md:h-8 ${phase.highlight ? "text-white" : "text-brand-purple"}`} />
                 </div>
